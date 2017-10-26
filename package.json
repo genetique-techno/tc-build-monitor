@@ -1,0 +1,15 @@
+{
+  "name": "tc-build-monitor",
+  "version": "1.0.0",
+  "description": "reports status of teamcity builds within a parent project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aaron Todd",
+  "license": "ISC",
+  "dependencies": {
+    "highland": "^2.11.1",
+    "request": "^2.83.0"
+  }
+}
