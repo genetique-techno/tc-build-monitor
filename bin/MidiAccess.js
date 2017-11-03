@@ -26,7 +26,7 @@ module.exports = MidiAccess;
 
   MidiOutput.send( sequence<octet> )
     This is raw bytes being sent down to the controller.  Each octect in the sequence is a byte of data
-    You can also send number values instead of octets.
+    You can also send decimal numbers instead of octets because nobody likes a showoff.
 
   Examples:
     Note On Message: 1001nnnn (midi channel number), 0kkkkkkk (key), 0vvvvvvv (velocity)
