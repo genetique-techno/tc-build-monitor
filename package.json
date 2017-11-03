@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "highland": "^2.11.1",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "web-midi-api": "^1.4.4"
   }
 }

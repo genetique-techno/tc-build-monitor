@@ -1,41 +1,32 @@
 const request = require("request");
 const h = require("highland");
 const config = require("../config/config.js");
-const subProjects = config.subProjects.map(suffix => `${config.projectLocator}_${suffix}`);
+const TeamCity = require("./TeamCity");
+const MidiAccess = require("./MidiAccess");
+const Slot = require("./Slot");
 
-let sessionID;
+const teamCity = new TeamCity( config );
+const midiAccess = new MidiAccess();
 
-const options = {
-  url: `${config.teamCityConnection.host}:${config.teamCityConnection.port}/httpAuth/app/rest/buildTypes`,
-  qs: {
-    locator: `affectedProject:(id:${config.projectLocator})`,
-    fields: `buildType(id,webUrl,builds($locator(count:1),build(status)))`,
-  },
-  method: "GET",
-  auth: {
-    user: config.user,
-    password: config.password,
-  },
-  headers: {
-    Accept: "application/json",
-  },
-};
+midiAccess.initialize()
+  .flatMap( port => {
 
-h.wrapCallback(request)(options)
-  // get the cookie out of the response headers "Set-Cookie" key
-  .map( res => res.body )
-  .map( JSON.parse )
-  .map( body => body.buildType )
-  .sequence()
-  .map( build => {
-    const status = (build.builds.build[0] || {}).status;
-    return {
-      id: build.id,
-      url: build.webUrl,
-      status: status,
-    };
+    return teamCity.getProjectStats( 10000 )
+      .batchWithTimeOrCount( 1000 )
+      .flatMap( batch => h(batch) // each value is a build object
+        .group("name") // single value is grouped object
+        .through( stream => {
+
+          const slots = Array(8).fill(1).map((v, i) => new Slot({port: port, row: i, name: ""}));
+
+          const pickInOrder = obj => h(config.subProjects)
+            .map( subProject => obj[subProject] )
+
+          return stream
+            .flatMap( pickInOrder )
+            .collect() // single value is an array of array of builds
+            .map(projects => projects.forEach((project, index) => slots[index].setState( project )))
+        }))
   })
-  .filter( build => subProjects.includes( build.id ) )
-  .reject( build => typeof build.status === "undefined" )
-  .tap(h.log)
+  .errors(err => console.log("error", err))
   .done( () => {})
