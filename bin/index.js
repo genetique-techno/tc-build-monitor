@@ -1,9 +1,9 @@
 const request = require("request");
 const h = require("highland");
 const config = require("../config/config.js");
-const TeamCity = require("./TeamCity");
-const MidiAccess = require("./MidiAccess");
-const Slot = require("./Slot");
+const TeamCity = require("../lib/TeamCity");
+const MidiAccess = require("../lib/MidiAccess");
+const Slot = require("../lib/Launchpad/Slot");
 
 const teamCity = new TeamCity( config );
 const midiAccess = new MidiAccess();
