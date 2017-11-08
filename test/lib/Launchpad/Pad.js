@@ -20,7 +20,7 @@ describe( "Pad", function() {
       };
     });
 
-    it( "constructor", function() {
+    it( "assigns the correct properties to context and sends initial midi state", function() {
       this.lib.call( this.ctx, this.fakeOptions );
       sinon.assert.calledOnce(this.ctx._sendMidi); // sets initial state
       assert.equal( typeof this.ctx.port, "object", "has midi port" );
