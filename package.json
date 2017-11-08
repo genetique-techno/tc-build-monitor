@@ -13,6 +13,8 @@
     "highland": "^2.11.1",
     "mocha": "^4.0.1",
     "mocha-clean": "^1.0.0",
+    "proxyquire": "^1.8.0",
+    "ramda": "^0.25.0",
     "request": "^2.83.0",
     "sinon": "^4.1.1",
     "web-midi-api": "^1.4.4"
