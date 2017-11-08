@@ -2,14 +2,15 @@
 describe( "Pad", function() {
 
   before( function() {
-    this.lib = require(path.resolve(projectRoot, "lib", "Launchpad", "Pad.js"));
-      console.log(this.lib);
+    this.lib = getProjectModule(["lib", "Launchpad", "Pad.js"]);
   });
 
   describe( "constructor", function( done ) {
+
     it( "constructor", function() {
 
-
     });
+
   });
+
 });
