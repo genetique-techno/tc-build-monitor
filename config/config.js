@@ -6,9 +6,11 @@ module.exports = {
   subProjects: [
     "ApiMultiSport",
     "Parser",
+    "Fetcher",
     "DbStore",
     "Aggregator",
     "FilePublisher",
     "DockerStack",
+    "WeatherPoller",
   ],
 };
